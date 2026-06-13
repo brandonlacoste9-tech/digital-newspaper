@@ -43,7 +43,7 @@ const NewsArticle = () => {
       <figure style={{ margin: '0 0 3rem 0' }}>
         <img src={article.imageUrl} alt={article.title} style={{ width: '100%', height: 'auto', borderRadius: '4px', border: '1px solid var(--border-color)', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }} />
         <figcaption style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.5rem', textAlign: 'right', fontStyle: 'italic' }}>
-          Exclusive photography for The Global Pulse.
+          Exclusive photography for Gamer News.
         </figcaption>
       </figure>
 
