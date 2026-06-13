@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --bg-color: #fdfbf7; /* Warm off-white paper */
+  --bg-secondary: #f4f1ea;
+  --bg-tertiary: #ebe7dd;
+  
+  --text-primary: #1a1a1a; /* Very dark grey/black ink */
+  --text-secondary: #4a4a4a;
+  --text-muted: #737373;
+  
+  --accent-color: #d90429; /* Vibrant journalistic red */
+  --accent-secondary: #00509e; /* Classic hyperlink blue */
+  --border-color: #d4cfc5; /* Darker paper border */
+  
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+}
+
+body.dark-theme {
+  --bg-color: #1a1411; /* Deep dark roasted cognac */
+  --bg-secondary: #241c18; /* Rich brown/black */
+  --bg-tertiary: #302621;
+  
+  --text-primary: #f2e6db; /* Warm creamy beige text */
+  --text-secondary: #c9b19c;
+  --text-muted: #8c7666;
+  
+  --accent-color: #ff6b35; /* Bright amber/cognac accent */
+  --accent-secondary: #f7c59f; /* Soft amber */
+  --border-color: #403028; /* Warm dark border */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--text-primary);
+}
+
+.html-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin: 1.5rem 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-sans);
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--text-primary);
+  color: var(--bg-color);
+}
+
+.btn-primary:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-outline:hover {
+  border-color: var(--text-primary);
+}
+
+/* Typography styles */
+.headline {
+  font-family: var(--font-serif);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.subheadline {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+/* Header Masthead */
+.masthead {
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.5rem 0;
+}
+
+/* Article Card */
+.article-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 2rem;
+}
+
+.article-card:hover .headline {
+  color: var(--accent-color);
+  text-decoration: underline;
+}

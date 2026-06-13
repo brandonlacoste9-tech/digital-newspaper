@@ -1,0 +1,30 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
+import Header from './components/Header';
+import Home from './pages/Home';
+import Article from './pages/Article';
+import NewsArticle from './pages/NewsArticle';
+import Category from './pages/Category';
+import './index.css';
+
+function App() {
+  return (
+    <Router>
+      <ThemeProvider>
+        <AuthProvider>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/article/:id" element={<Article />} />
+            <Route path="/news/:id" element={<NewsArticle />} />
+            <Route path="/category/:catId" element={<Category />} />
+          </Routes>
+        </AuthProvider>
+      </ThemeProvider>
+    </Router>
+  );
+}
+
+export default App;
