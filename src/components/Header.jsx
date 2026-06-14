@@ -68,7 +68,7 @@ const Header = () => {
         {/* Logo */}
         <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
           <Link to="/" style={{ fontFamily: 'var(--font-serif)', fontSize: '4rem', fontWeight: 900, letterSpacing: '-2px', color: 'var(--text-primary)' }}>
-            GAMER NEWS
+            HACKER MEDIA
           </Link>
         </div>
 
