@@ -1,3 +1,5 @@
+import { supabase } from '../supabase';
+
 export const newsData = [
   {
     id: "ai-breakthrough",
@@ -103,13 +105,28 @@ export const newsData = [
 
 export const fetchLiveNews = async () => {
   try {
+    // 1. Fetch from our Supabase Admin Panel
+    let customArticles = [...newsData];
+    try {
+      const { data: dbArticles, error } = await supabase
+        .from('hacker_articles')
+        .select('*')
+        .order('created_at', { ascending: false });
+        
+      if (!error && dbArticles && dbArticles.length > 0) {
+        customArticles = [...dbArticles, ...newsData];
+      }
+    } catch (dbErr) {
+      console.warn("Could not fetch from Supabase", dbErr);
+    }
+
+    // 2. Fetch from The Verge
     const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.theverge.com/rss/index.xml');
     const data = await res.json();
     
-    if (!data.items) return newsData;
+    if (!data.items) return customArticles;
 
     const liveArticles = data.items.map(item => {
-      // Strip HTML tags for the summary
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = item.description || '';
       const summary = tempDiv.textContent || tempDiv.innerText || '';
@@ -123,20 +140,21 @@ export const fetchLiveNews = async () => {
         author: item.author || 'The Verge',
         date: new Date(item.pubDate).toLocaleDateString(),
         imageUrl: item.thumbnail || 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop',
-        isHtml: true, // Flag to render as raw HTML
+        isHtml: true,
         originalLink: item.link
       };
     });
 
-    // Mix our custom fake news with the live news!
+    // Mix our custom fake/admin news with the live news!
+    // If we have custom articles, spread them out
     return [
-      newsData[0], // Keep our feature at the very top
+      ...customArticles.slice(0, 2), // Top 2 are from our database/hardcoded
       ...liveArticles.slice(0, 3), // 3 live articles
-      newsData[4], // The AI PTO article
+      ...customArticles.slice(2, 4),
       ...liveArticles.slice(3, 8),
-      newsData[5],
+      ...customArticles.slice(4),
       ...liveArticles.slice(8)
-    ].filter(Boolean); // Filter out any undefineds if arrays are short
+    ].filter(Boolean);
 
   } catch (error) {
     console.error('Failed to fetch live news:', error);

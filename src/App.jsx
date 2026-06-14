@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Article from './pages/Article';
 import NewsArticle from './pages/NewsArticle';
 import Category from './pages/Category';
+import Admin from './pages/Admin';
 import './index.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/article/:id" element={<Article />} />
             <Route path="/news/:id" element={<NewsArticle />} />
             <Route path="/category/:catId" element={<Category />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </AuthProvider>
       </ThemeProvider>
