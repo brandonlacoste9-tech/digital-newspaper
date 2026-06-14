@@ -68,6 +68,36 @@ export const newsData = [
     author: "Satire Desk",
     date: new Date().toLocaleDateString(),
     imageUrl: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=2008&auto=format&fit=crop"
+  },
+  {
+    id: "cyber-breach",
+    category: "Cybersecurity",
+    title: "Zero-Day Exploit Paralyzes Global Supply Chains in Under 4 Hours",
+    summary: "A devastating cyberattack utilizing a previously unknown zero-day vulnerability has crippled major logistics networks across three continents.",
+    content: "Global shipping and logistics networks were brought to their knees today following a sophisticated cyberattack. Cybersecurity experts confirm the breach originated from a highly coordinated zero-day exploit targeting outdated legacy mainframes still in use by major freight companies.\n\n\"The sheer speed of propagation was unprecedented,\" stated a lead analyst at Iron Claw Labs. \"The payload bypassed state-of-the-art intrusion detection systems by masking itself as routine encrypted telemetry data.\"\n\nGovernments are scrambling to patch systems, but the damage is already done. Supply chains are expected to face delays stretching into weeks, underscoring the critical need for modernized infrastructure in an increasingly hostile digital landscape.",
+    author: "Elena Rostova",
+    date: new Date().toLocaleDateString(),
+    imageUrl: "/assets/news_cybersecurity.png"
+  },
+  {
+    id: "vr-revolution",
+    category: "Gaming",
+    title: "Next-Gen VR Headset Promises 'True Dive' Immersion, Raises Ethical Concerns",
+    summary: "The highly anticipated 'Neural-Link VR' headset claims to offer full-sensory immersion, blurring the lines between physical reality and digital simulation.",
+    content: "The gaming industry is on the verge of a massive paradigm shift with the impending release of the 'Neural-Link VR' headset. Unlike traditional AR/VR headsets that rely on optical displays, this next-generation device supposedly interfaces directly with the user's neural pathways to simulate sensations of touch, temperature, and acceleration.\n\nEarly beta testers describe the experience as 'indistinguishable from reality.' However, the technology has sparked intense debate among ethicists. If a digital experience feels entirely real, what are the psychological implications of long-term exposure to hyper-violent or highly addictive simulations?\n\nDespite the controversy, pre-orders sold out in 14 seconds, proving that gamers are more than willing to blur the lines of reality for the ultimate escape.",
+    author: "Marcus Vance",
+    date: new Date().toLocaleDateString(),
+    imageUrl: "/assets/news_vrgaming.png"
+  },
+  {
+    id: "data-center-leak",
+    category: "Tech",
+    title: "Whistleblower Leaks Terabytes of Data Exposing Covert AI Surveillance Program",
+    summary: "A massive data dump from a rogue engineer has revealed a clandestine program utilizing predictive AI to monitor global communication networks.",
+    content: "In what is being called the largest data leak in a decade, a whistleblower has released terabytes of classified documents exposing 'Project Panopticon'—a covert surveillance initiative powered by predictive artificial intelligence.\n\nThe leaked files detail a sprawling network of high-tech data centers designed to ingest and analyze global communication flows in real-time. According to the documents, the AI doesn't just monitor current threats; it attempts to predict future actions by building intricate psychological profiles of ordinary citizens.\n\nThe revelations have sparked global outrage, with privacy advocates demanding immediate legislative action. As the digital fallout continues, the whereabouts of the whistleblower remain unknown.",
+    author: "David Chen",
+    date: new Date().toLocaleDateString(),
+    imageUrl: "/assets/news_serverroom.png"
   }
 ];
 
