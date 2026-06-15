@@ -1,4 +1,5 @@
 import React from 'react';
+import EmpireBar from './components/EmpireBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -15,6 +16,7 @@ function App() {
     <Router>
       <ThemeProvider>
         <AuthProvider>
+          <EmpireBar />
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
