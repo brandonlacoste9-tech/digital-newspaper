@@ -25,8 +25,9 @@ async function postTopStory() {
       throw new Error('No stories found.');
     }
 
-    // Grab the #1 story
-    const topStoryId = topIds[0];
+    // Grab a random story from the top 15 to prevent Twitter "duplicate post" errors
+    const randomIndex = Math.floor(Math.random() * 15);
+    const topStoryId = topIds[randomIndex];
     const storyRes = await fetch(`https://hacker-news.firebaseio.com/v0/item/${topStoryId}.json`);
     const story = await storyRes.json();
 
@@ -34,7 +35,7 @@ async function postTopStory() {
       throw new Error('Failed to parse top story details.');
     }
 
-    console.log(`✅ Acquired Target: "${story.title}"`);
+    console.log(`✅ Acquired Target: "${story.title}" (Rank #${randomIndex + 1})`);
 
     // 2. Format the Post
     const postText = `🚨 BREAKING INTELLIGENCE 🚨\n\n"${story.title}"\n\nAccess the full intercepted source code and bypass the Skillwall here:\n${BASE_URL}/news/${topStoryId}\n\n#HackerNews #TechNews #CyberSecurity`;
