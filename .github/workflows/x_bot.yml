@@ -1,0 +1,32 @@
+name: Hacker Media X Bot
+
+on:
+  schedule:
+    # Run every hour at the 0th minute
+    - cron: '0 * * * *'
+  workflow_dispatch: # Allows manual trigger from the Actions tab
+
+jobs:
+  transmit:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Execute X Bot
+      env:
+        X_APP_KEY: ${{ secrets.X_APP_KEY }}
+        X_APP_SECRET: ${{ secrets.X_APP_SECRET }}
+        X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+        X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+      run: node bot/x_bot.cjs
