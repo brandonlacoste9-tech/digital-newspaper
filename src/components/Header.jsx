@@ -85,6 +85,7 @@ const Header = () => {
             <Link to="/category/Tech" style={{ color: 'var(--text-secondary)' }}>Technology</Link>
             <Link to="/category/AI" style={{ color: 'var(--text-secondary)' }}>AI</Link>
             <Link to="/category/Gaming" style={{ color: 'var(--text-secondary)' }}>Gaming</Link>
+            <a href="https://news.ycombinator.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-color)' }}>Real Hacker News</a>
           </div>
 
           <div style={{ cursor: 'pointer' }}>
