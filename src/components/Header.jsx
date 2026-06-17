@@ -51,16 +51,10 @@ const Header = () => {
                   <User size={14} /> {user.email}
                   {plan === 'PRO' && <span style={{ background: 'var(--accent-color)', color: '#fff', padding: '0.1rem 0.4rem', borderRadius: '2px', fontSize: '0.7rem', fontWeight: 'bold' }}>PRO</span>}
                 </span>
-                {plan === 'FREE' && (
-                  <a href={`${arcadeUrl}/pricing`} style={{ color: 'var(--accent-color)', fontWeight: 'bold' }}>Subscribe</a>
-                )}
                 <button onClick={logout} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', textTransform: 'uppercase', letterSpacing: '1px' }}>Logout</button>
               </>
             ) : (
-              <>
-                <a href={`${arcadeUrl}/login`} style={{ color: 'inherit' }}>Log In</a>
-                <a href={`${arcadeUrl}/pricing`} style={{ color: 'var(--accent-color)', fontWeight: 'bold' }}>Subscribe</a>
-              </>
+              <></>
             )}
           </div>
         </div>
