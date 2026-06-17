@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { fetchLiveNews } from '../data/news';
+import { useAuth } from '../context/AuthContext';
+import { supabase } from '../supabaseClient';
+import CyberToast from './CyberToast';
 
 const NewsArticle = () => {
   const { id } = useParams();
@@ -35,13 +38,45 @@ const NewsArticle = () => {
 
   if (!article) return <div className="container" style={{ padding: '4rem 2rem' }}><h1 className="headline">Decrypting Intelligence...</h1></div>;
 
+  const { user } = useAuth();
+  const [toastMsg, setToastMsg] = useState(null);
+  const [toastAmount, setToastAmount] = useState(0);
+
   const handleStartHack = () => {
     setIsPlayingGame(true);
   };
 
-  const handleHackComplete = () => {
+  const handleHackComplete = async () => {
     setIsPlayingGame(false);
     setIsUnlocked(true);
+
+    if (user) {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.access_token) {
+          // Send request to Zyeute backend
+          const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+          const res = await fetch(`${backendUrl}/api/rewards/skillwall`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${session.access_token}`
+            }
+          });
+          
+          if (res.ok) {
+            const data = await res.json();
+            setToastAmount(data.reward);
+            setToastMsg(data.message);
+          } else if (res.status === 429) {
+            setToastAmount(0);
+            setToastMsg("DAILY INTEL LIMIT REACHED. NO FUNDS TRANSFERRED.");
+          }
+        }
+      } catch (err) {
+        console.error("Failed to acquire cennes:", err);
+      }
+    }
   };
 
   return (
@@ -146,6 +181,14 @@ const NewsArticle = () => {
         <p style={{ marginBottom: '1.5rem' }}>If you enjoyed this deep-dive, consider subscribing to The Arcade to gain full access to our interactive gaming catalogue and bypass future Skillwalls.</p>
         <a href={import.meta.env.VITE_ARCADE_URL || 'http://localhost:5173'} className="btn btn-primary" style={{ background: 'var(--accent-secondary)', color: '#fff' }}>Subscribe Now</a>
       </div>
+
+      {toastMsg && (
+        <CyberToast 
+          message={toastMsg} 
+          amount={toastAmount} 
+          onClose={() => setToastMsg(null)} 
+        />
+      )}
     </article>
   );
 };
