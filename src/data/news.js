@@ -3,7 +3,7 @@ export const newsData = []; // Removed fake news
 // Helper to fetch and parse RSS feeds via rss2json
 const fetchRssNews = async (rssUrl, categoryName) => {
   try {
-    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`);
+    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}&api_key=&count=30`);
     const data = await res.json();
     
     if (!data.items) return [];
@@ -58,8 +58,8 @@ export const fetchLiveNews = async () => {
       const topIds = await hnRes.json();
       
       if (topIds && topIds.length) {
-        const top10Ids = topIds.slice(0, 10);
-        const itemPromises = top10Ids.map(id => 
+        const top30Ids = topIds.slice(0, 30);
+        const itemPromises = top30Ids.map(id => 
           fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.json())
         );
         const items = await Promise.all(itemPromises);
