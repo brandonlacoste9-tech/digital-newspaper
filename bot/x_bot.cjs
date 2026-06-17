@@ -1,24 +1,17 @@
 require('dotenv').config();
-const { TwitterApi } = require('twitter-api-v2');
+const SocialPost = require('social-media-api');
 
 // Hacker Media Config
 const BASE_URL = 'https://www.hackermedia.fun';
 
-// X API Credentials
-const client = new TwitterApi({
-  appKey: process.env.X_APP_KEY || '',
-  appSecret: process.env.X_APP_SECRET || '',
-  accessToken: process.env.X_ACCESS_TOKEN || '',
-  accessSecret: process.env.X_ACCESS_SECRET || '',
-});
-
-const rwClient = client.readWrite;
+// Ayrshare Initialization
+const ayrshare = new SocialPost(process.env.AYRSHARE_API_KEY || '');
 
 async function postTopStory() {
-  console.log('🤖 Firing up the X Bot...');
+  console.log('🤖 Firing up the Autonomous Social Bot...');
 
-  if (!process.env.X_APP_KEY) {
-    console.error('❌ X_APP_KEY is missing. Please configure your .env file or GitHub Secrets.');
+  if (!process.env.AYRSHARE_API_KEY) {
+    console.error('❌ AYRSHARE_API_KEY is missing. Please configure your .env file or GitHub Secrets.');
     process.exit(1);
   }
 
@@ -32,7 +25,7 @@ async function postTopStory() {
       throw new Error('No stories found.');
     }
 
-    // We will just grab the #1 story
+    // Grab the #1 story
     const topStoryId = topIds[0];
     const storyRes = await fetch(`https://hacker-news.firebaseio.com/v0/item/${topStoryId}.json`);
     const story = await storyRes.json();
@@ -43,19 +36,29 @@ async function postTopStory() {
 
     console.log(`✅ Acquired Target: "${story.title}"`);
 
-    // 2. Format the Tweet
-    const tweetText = `🚨 BREAKING INTELLIGENCE 🚨\n\n"${story.title}"\n\nAccess the full intercepted source code and bypass the Skillwall here:\n${BASE_URL}/news/${topStoryId}\n\n#HackerNews #TechNews #CyberSecurity`;
+    // 2. Format the Post
+    const postText = `🚨 BREAKING INTELLIGENCE 🚨\n\n"${story.title}"\n\nAccess the full intercepted source code and bypass the Skillwall here:\n${BASE_URL}/news/${topStoryId}\n\n#HackerNews #TechNews #CyberSecurity`;
 
-    console.log('📝 Formatting Tweet:');
+    console.log('📝 Formatting Post:');
     console.log('-----------------------------------');
-    console.log(tweetText);
+    console.log(postText);
     console.log('-----------------------------------');
 
-    // 3. Post to X
-    console.log('🚀 Transmitting to X network...');
-    const { data: createdTweet } = await rwClient.v2.tweet(tweetText);
+    // 3. Transmit via Ayrshare (to Twitter)
+    console.log('🚀 Transmitting payload via Ayrshare...');
     
-    console.log(`🏆 SUCCESS! Intelligence leaked successfully. Tweet ID: ${createdTweet.id}`);
+    const postResponse = await ayrshare.post({
+      post: postText,
+      platforms: ['twitter'], // It will post to whatever platforms are linked in the Ayrshare dashboard
+      shortenLinks: false
+    });
+
+    if (postResponse.status === 'error') {
+      throw new Error(postResponse.message);
+    }
+    
+    console.log(`🏆 SUCCESS! Intelligence leaked successfully.`);
+    console.log(postResponse);
 
   } catch (error) {
     console.error('❌ Bot Execution Failed:', error);
