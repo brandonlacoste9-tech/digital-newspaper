@@ -42,8 +42,8 @@ async function postTopStory() {
         throw new Error('No stories found.');
       }
 
-      // Grab a random story from the top 15 to prevent Twitter "duplicate post" errors
-      const randomIndex = Math.floor(Math.random() * 15);
+      // Grab a random story from the top 50 to prevent Twitter "duplicate post" errors
+      const randomIndex = Math.floor(Math.random() * 50);
       const topStoryId = topIds[randomIndex];
       const storyRes = await fetch(`https://hacker-news.firebaseio.com/v0/item/${topStoryId}.json`);
       const story = await storyRes.json();
@@ -54,8 +54,14 @@ async function postTopStory() {
 
       console.log(`✅ Acquired Target: "${story.title}" (Rank #${randomIndex + 1})`);
 
+      // Ensure the title isn't too long for Twitter (280 max limit for the whole post)
+      let safeTitle = story.title;
+      if (safeTitle.length > 90) {
+        safeTitle = safeTitle.substring(0, 87) + "...";
+      }
+
       // 2. Format the News Post
-      postText = `🚨 BREAKING INTELLIGENCE 🚨\n\n"${story.title}"\n\nAccess the full intercepted source code and bypass the Skillwall here:\n${BASE_URL}/news/${topStoryId}\n\n#HackerNews #TechNews #CyberSecurity`;
+      postText = `🚨 BREAKING INTELLIGENCE 🚨\n\n"${safeTitle}"\n\nAccess the full intercepted source code and bypass the Skillwall here:\n${BASE_URL}/news/${topStoryId}\n\n#HackerNews #TechNews #CyberSecurity`;
     }
 
     console.log('📝 Formatting Post:');
@@ -72,15 +78,18 @@ async function postTopStory() {
       shortenLinks: false
     });
 
-    if (postResponse.status === 'error') {
-      throw new Error(postResponse.message);
+    if (postResponse && postResponse.status === 'error') {
+      throw new Error(postResponse.message || JSON.stringify(postResponse));
     }
     
     console.log(`🏆 SUCCESS! Intelligence leaked successfully.`);
     console.log(postResponse);
 
   } catch (error) {
-    console.error('❌ Bot Execution Failed:', error);
+    console.error('❌ Bot Execution Failed:', error.message || error);
+    if (error.response) {
+      console.error('Ayrshare API Response Error:', error.response);
+    }
     process.exit(1);
   }
 }
